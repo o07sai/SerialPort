@@ -1,0 +1,454 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\SerialPortTest.rc2""  // non-SerialPortTest Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\项目8.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 364, 234
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 魔杖串口工具"
+FONT 10, "宋体", 400, 0, 0x86
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "魔杖串口工具 1.4.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2017-11 o07sai",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,307,12,50,19,WS_GROUP
+    LTEXT           "o07sai@163.com",IDC_STATIC,7,219,119,8
+    EDITTEXT        IDC_UPDATE_CONTENT,7,41,350,175,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+END
+
+IDD_SERIALPORT_DIALOG DIALOGEX 0, 0, 677, 398
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "魔杖串口工具"
+FONT 10, "宋体", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_SEND_BUF,147,310,340,71,ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL
+    COMBOBOX        IDC_SERIALPORT_NUM,35,5,45,81,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_BAUD_RATE,35,20,45,87,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_DATA_BIT,35,36,45,85,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_STOP_BIT,35,52,45,52,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CHECK_BIT,35,68,45,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "打开串口",IDC_OPEN_SERIALPORT,87,70,52,26
+    CONTROL         "HEX显示",IDC_HEX_DIS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,153,273,44,10
+    CONTROL         "HEX发送",IDC_HEX_SEND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,153,288,44,10
+    CONTROL         "求和校验",IDC_CHECK_SUM,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,198,273,48,10
+    CONTROL         "异或校验",IDC_CHECK_XOR,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,198,288,48,10
+    CONTROL         "CRC16-IBM",IDC_CHECK_CRC16_IBM,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,246,273,52,10
+    CONTROL         "CRC32-IEEE",IDC_CHECK_CRC32,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,246,288,52,10
+    CONTROL         "CRC16-CCITT",IDC_CHECK_CRC16_CCITT,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,307,273,52,10
+    EDITTEXT        IDC_CHECK_INDEX,422,286,57,14,ES_NUMBER
+    CONTROL         "Spin2",IDC_SPIN2,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,471,284,14,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM1,494,5,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM2,494,23,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM3,494,41,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM4,494,59,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM5,494,77,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM6,494,95,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM7,494,113,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM8,494,131,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM9,494,149,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM10,494,167,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM11,494,185,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM12,494,203,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM13,494,221,13,14
+    PUSHBUTTON      "<<",IDC_SEND_MEM14,494,239,13,14
+    EDITTEXT        IDC_MEM_1,511,5,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_2,511,23,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_3,511,41,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_4,511,59,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_5,511,77,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_6,511,95,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_7,511,113,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_8,511,131,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_9,511,149,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_10,511,167,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_11,511,185,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_12,511,203,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_13,511,221,147,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MEM_14,511,239,147,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_CHECK_MEM1,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,8,16,8
+    CONTROL         "",IDC_CHECK_MEM2,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,26,16,8
+    CONTROL         "",IDC_CHECK_MEM3,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,44,16,8
+    CONTROL         "",IDC_CHECK_MEM4,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,62,16,8
+    CONTROL         "",IDC_CHECK_MEM5,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,80,16,8
+    CONTROL         "",IDC_CHECK_MEM6,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,98,16,8
+    CONTROL         "",IDC_CHECK_MEM7,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,116,16,8
+    CONTROL         "",IDC_CHECK_MEM8,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,134,16,8
+    CONTROL         "",IDC_CHECK_MEM9,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,152,16,8
+    CONTROL         "",IDC_CHECK_MEM10,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,170,16,8
+    CONTROL         "",IDC_CHECK_MEM11,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,188,16,8
+    CONTROL         "",IDC_CHECK_MEM12,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,206,16,8
+    CONTROL         "",IDC_CHECK_MEM13,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,224,16,8
+    CONTROL         "",IDC_CHECK_MEM14,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,242,16,8
+    CONTROL         "HEX发送",IDC_GHEX_SEND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,499,256,48,10
+    CONTROL         "循环发送",IDC_G_CYCLE_SEND,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,499,269,48,10
+    CONTROL         "全选",IDC_SELECT_ALL,"Button",BS_AUTO3STATE | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | BS_NOTIFY | WS_TABSTOP,634,255,32,10
+    EDITTEXT        IDC_CYCLE_TIME,583,265,58,14,ES_RIGHT
+    CONTROL         "自动发送",IDC_AUTO_SEND,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,499,317,48,10
+    EDITTEXT        IDC_AUTOSEND_TIME,583,313,58,14,ES_RIGHT
+    DEFPUSHBUTTON   "手动发送",IDC_MANUAL_SEND,498,335,49,17
+    PUSHBUTTON      "清空重填",IDC_EMPTY_SENDBUF,498,362,49,17
+    PUSHBUTTON      "清接收区",IDC_EMPTY_RECVBUF,558,335,49,17
+    PUSHBUTTON      "停止显示",IDC_STOP_DIS,558,362,49,17
+    PUSHBUTTON      "关于",IDC_ABOUT,618,335,49,17
+    PUSHBUTTON      "退出",IDC_OK,618,362,49,17
+    LTEXT           "Static",IDC_SERIALPORT_STATE,1,385,238,13,SS_CENTERIMAGE | SS_SUNKEN
+    RTEXT           "Static",IDC_SEND_COUNT,268,385,71,13,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_GROUP
+    RTEXT           "Static",IDC_RECV_COUNT,366,385,73,13,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_GROUP
+    RTEXT           "",IDC_SYS_TIME,543,385,132,13,SS_CENTERIMAGE | SS_SUNKEN
+    LTEXT           "端口号",IDC_STATIC,8,7,25,8
+    LTEXT           "波特率",IDC_STATIC,8,23,25,8
+    LTEXT           "数据位",IDC_STATIC,8,39,25,8
+    LTEXT           "停止位",IDC_STATIC,8,55,25,8
+    LTEXT           "校验位",IDC_STATIC,8,71,25,8
+    CONTROL         149,IDC_LOGO,"Static",SS_BITMAP | SS_NOTIFY,3,271,137,111
+    GROUPBOX        "",IDC_STATIC,1,0,141,99
+    GROUPBOX        "Watches",IDC_STATIC,1,103,141,280
+    GROUPBOX        "",IDC_STATIC,147,263,340,42
+    GROUPBOX        "",IDC_STATIC,492,0,183,285
+    GROUPBOX        "",IDC_STATIC,492,306,183,78
+    RTEXT           "校验起始偏移",IDC_STATIC,368,289,49,8
+    LTEXT           "毫秒",IDC_STATIC,648,268,17,8
+    EDITTEXT        IDC_WATCH1,23,128,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_WATCH2,23,148,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_WATCH3,23,168,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_WATCH4,23,188,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_WATCH5,23,208,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_WATCH6,23,228,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_WATCH7,23,248,114,14,ES_RIGHT | ES_READONLY | NOT WS_TABSTOP
+    CONTROL         144,IDC_B_CONNECTED,"Static",SS_BITMAP,102,44,18,20
+    LTEXT           "毫秒",IDC_STATIC,648,317,17,8
+    PUSHBUTTON      "1",IDC_WATCH_BTN1,7,128,14,14
+    PUSHBUTTON      "2",IDC_WATCH_BTN2,7,148,14,14
+    PUSHBUTTON      "3",IDC_WATCH_BTN3,7,168,14,14
+    PUSHBUTTON      "4",IDC_WATCH_BTN4,7,188,14,14
+    PUSHBUTTON      "5",IDC_WATCH_BTN5,7,208,14,14
+    PUSHBUTTON      "6",IDC_WATCH_BTN6,7,228,14,14
+    PUSHBUTTON      "7",IDC_WATCH_BTN7,7,248,14,14
+    LTEXT           "<<-双击计数器窗口清零",IDC_STATIC,442,385,97,13,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_GROUP
+    LTEXT           "发送:",IDC_STATIC,245,387,20,8
+    LTEXT           "接收:",IDC_STATIC,344,387,20,8
+    CONTROL         "使用观察窗口",IDC_USE_WATCHES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,115,61,10
+    EDITTEXT        IDC_RECV_BUF,145,4,342,258,ES_MULTILINE | ES_AUTOVSCROLL | ES_NOHIDESEL | WS_VSCROLL
+    PUSHBUTTON      "刷新",IDC_REFRESH_COMM,87,4,52,26
+    COMBOBOX        IDC_ENDIAN,76,112,58,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "回车尾缀",IDC_NEW_LINE_END,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,307,288,52,10
+    CONTROL         "隐藏发送内容",IDC_HIDE_SEND,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,375,273,62,10
+    CONTROL         "使能",IDC_RAUTO_EN,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,7,278,31,10
+    GROUPBOX        "自动回复",IDC_SAUTOBOX,1,267,136,116,NOT WS_VISIBLE
+    EDITTEXT        IDC_ERAUTO_EDIT,3,290,131,90,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | NOT WS_VISIBLE
+    EDITTEXT        IDC_SUFFIX,511,289,147,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_CHECK_SUFFIX,"Button",BS_AUTOCHECKBOX | BS_NOTIFY | WS_TABSTOP,659,291,16,8
+    RTEXT           "尾缀",IDC_STATIC,490,292,15,8
+    COMBOBOX        IDC_RTS_FLOW,35,84,45,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "RTS流控",IDC_STATIC,5,86,28,8
+END
+
+IDD_WATCH_ATTRI DIALOGEX 0, 0, 82, 59
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+FONT 10, "宋体", 400, 0, 0x86
+BEGIN
+    EDITTEXT        IDC_OFFSET,33,7,42,12,ES_RIGHT | ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,69,7,6,12
+    COMBOBOX        IDC_DATA_TYPE,33,23,42,75,CBS_DROPDOWNLIST | WS_TABSTOP
+    COMBOBOX        IDC_B_HEX,33,40,42,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "偏移:",IDC_STATIC,7,7,19,8
+    LTEXT           "类型:",IDC_STATIC,7,23,19,8
+    LTEXT           "HEX:",IDC_STATIC,7,40,17,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "FileDescription", "魔杖串口工具"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "SerialPortTest"
+            VALUE "LegalCopyright", "版权所有 (C) 2017 ---o07sai"
+            VALUE "OriginalFilename", "魔杖串口工具.EXE"
+            VALUE "ProductName", "魔杖串口工具 应用程序"
+            VALUE "ProductVersion", "V1.4.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 357
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 227
+    END
+
+    IDD_SERIALPORT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 675
+    END
+
+    IDD_WATCH_ATTRI, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 75
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 52
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "res\\name.exe.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_SERIALPORT_DIALOG DLGINIT
+BEGIN
+    IDC_BAUD_RATE, 0x403, 4, 0
+0x3131, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 4, 0
+0x3033, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 4, 0
+0x3036, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 5, 0
+0x3231, 0x3030, "\000" 
+    IDC_BAUD_RATE, 0x403, 5, 0
+0x3432, 0x3030, "\000" 
+    IDC_BAUD_RATE, 0x403, 5, 0
+0x3834, 0x3030, "\000" 
+    IDC_BAUD_RATE, 0x403, 5, 0
+0x3639, 0x3030, "\000" 
+    IDC_BAUD_RATE, 0x403, 6, 0
+0x3431, 0x3034, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 6, 0
+0x3931, 0x3032, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 6, 0
+0x3833, 0x3034, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 6, 0
+0x3635, 0x3030, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 6, 0
+0x3735, 0x3036, 0x0030, 
+    IDC_BAUD_RATE, 0x403, 7, 0
+0x3131, 0x3235, 0x3030, "\000" 
+    IDC_DATA_BIT, 0x403, 2, 0
+0x0035, 
+    IDC_DATA_BIT, 0x403, 2, 0
+0x0036, 
+    IDC_DATA_BIT, 0x403, 2, 0
+0x0037, 
+    IDC_DATA_BIT, 0x403, 2, 0
+0x0038, 
+    IDC_STOP_BIT, 0x403, 2, 0
+0x0031, 
+    IDC_STOP_BIT, 0x403, 4, 0
+0x2e31, 0x0035, 
+    IDC_STOP_BIT, 0x403, 2, 0
+0x0032, 
+    IDC_CHECK_BIT, 0x403, 5, 0
+0x6f4e, 0x656e, "\000" 
+    IDC_CHECK_BIT, 0x403, 4, 0
+0x644f, 0x0064, 
+    IDC_CHECK_BIT, 0x403, 5, 0
+0x7645, 0x6e65, "\000" 
+    IDC_CHECK_BIT, 0x403, 5, 0
+0x614d, 0x6b72, "\000" 
+    IDC_CHECK_BIT, 0x403, 6, 0
+0x7053, 0x6361, 0x0065, 
+    IDC_ENDIAN, 0x403, 14, 0
+0x694c, 0x7474, 0x656c, 0x4520, 0x646e, 0x6169, 0x006e, 
+    IDC_ENDIAN, 0x403, 11, 0
+0x6942, 0x2067, 0x6e45, 0x6964, 0x6e61, "\000" 
+    IDC_ENDIAN, 0x403, 7, 0
+0x4f4d, 0x4244, 0x5355, "\000" 
+    IDC_RTS_FLOW, 0x403, 8, 0
+0x4944, 0x4153, 0x4c42, 0x0045, 
+    IDC_RTS_FLOW, 0x403, 7, 0
+0x4e45, 0x4241, 0x454c, "\000" 
+    IDC_RTS_FLOW, 0x403, 10, 0
+0x4148, 0x444e, 0x4853, 0x4b41, 0x0045, 
+    IDC_RTS_FLOW, 0x403, 7, 0
+0x4f54, 0x4747, 0x454c, "\000" 
+    0
+END
+
+IDD_WATCH_ATTRI DLGINIT
+BEGIN
+    IDC_DATA_TYPE, 0x403, 6, 0
+0x4955, 0x544e, 0x0038, 
+    IDC_DATA_TYPE, 0x403, 7, 0
+0x4955, 0x544e, 0x3631, "\000" 
+    IDC_DATA_TYPE, 0x403, 7, 0
+0x4955, 0x544e, 0x3233, "\000" 
+    IDC_DATA_TYPE, 0x403, 6, 0
+0x4953, 0x544e, 0x0038, 
+    IDC_DATA_TYPE, 0x403, 7, 0
+0x4953, 0x544e, 0x3631, "\000" 
+    IDC_DATA_TYPE, 0x403, 7, 0
+0x4953, 0x544e, 0x3233, "\000" 
+    IDC_DATA_TYPE, 0x403, 6, 0
+0x4c46, 0x414f, 0x0054, 
+    IDC_DATA_TYPE, 0x403, 5, 0
+0x4843, 0x5241, "\000" 
+    IDC_B_HEX, 0x403, 2, 0
+0x0030, 
+    IDC_B_HEX, 0x403, 2, 0
+0x0031, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_FACE_HAPPY          BITMAP                  "res\\Face happy.bmp"
+IDB_FACE_SAD            BITMAP                  "res\\Face sad.bmp"
+IDB_WALI                BITMAP                  "res\\m_1297216136172.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 魔杖串口工具(&A)..."
+    IDS_UPDATE_STR          "nn"
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\SerialPortTest.rc2"  // non-SerialPortTest Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

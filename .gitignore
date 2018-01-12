@@ -1,0 +1,9 @@
+/Debug/*
+/ipch/*
+/Release/*
+*.sdf
+*.opensdf
+*.suo
+*.user
+*.aps
+a.ini
