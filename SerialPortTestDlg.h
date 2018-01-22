@@ -67,6 +67,8 @@ private:
 	CByteArray m_recvBag;
 	BYTE m_hzi;
 
+	CString m_ExFile;
+
 private:
 	void AppendChar2Dis(BYTE c);
 	void UpdateWatches(CByteArray& recvbag);
@@ -86,6 +88,8 @@ private:
 	int ReadParamFile(LPCSTR sFileName);
 	
 	void AppendString2Dis(LPCSTR str);
+
+	BOOL LoadExternedTxt(CString sFile);
 
 // Implementation
 protected:
@@ -120,6 +124,8 @@ public:
 	void GetBuffContent(int index, BYTE* pbuff);
 protected:
 	afx_msg LRESULT OnCommTimeout(WPARAM wParam, LPARAM lParam);
+public:
+	afx_msg void OnCbnSelchangeMem1();
 };
 
 //{{AFX_INSERT_LOCATION}}

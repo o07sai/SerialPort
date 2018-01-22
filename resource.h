@@ -18,8 +18,6 @@
 #define IDC_DATA_BIT                    1002
 #define IDC_STOP_BIT                    1003
 #define IDC_CHECK_BIT                   1004
-// #define IDC_DTR                         1005
-// #define IDC_RTS                         1006
 #define IDC_OPEN_SERIALPORT             1007
 #define IDC_RECV_BUF                    1008
 #define IDC_SEND_BUF                    1009
@@ -129,7 +127,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1079
+#define _APS_NEXT_CONTROL_VALUE         1080
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

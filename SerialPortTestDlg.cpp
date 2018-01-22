@@ -69,6 +69,9 @@ BOOL CAboutDlg::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 	CString str=_T(
+		"2018年01月22日\n"
+		"1. 扩展预置发送内容\n"
+		"\n"
 		"2017年11月28日\n"
 		"1. 改变RTS和DTR的使用方法。选择RTS流控，可以用它来控制RS485的方向，实现半双工。\n"
 		"2. v1.4.0\n"
@@ -187,6 +190,7 @@ BEGIN_MESSAGE_MAP(CSerialPortTestDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_STN_DBLCLK(IDC_LOGO, &CSerialPortTestDlg::OnStnDbClickedLogo)
 	ON_MESSAGE(WM_COMM_TIMEOUT, &CSerialPortTestDlg::OnCommTimeout)
+	ON_CBN_SELCHANGE(IDC_MEM_1, &CSerialPortTestDlg::OnCbnSelchangeMem1)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -642,6 +646,10 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 						SendDlgItemMessage(IDC_NEW_LINE_END, BM_SETCHECK, BST_UNCHECKED, 0);
 					}
 				}
+				else if(0 == strArr[0].CompareNoCase("EXFILE"))
+				{
+					LoadExternedTxt(strArr[1]);
+				}
 			}
 		}
 		if(!n) break;
@@ -768,6 +776,8 @@ int CSerialPortTestDlg::SaveParamFile(LPCSTR sFileName)
 	GetDlgItemText(IDC_SUFFIX, stemp);
 	sLine.Format("SUFFIX=%s\n", (LPCSTR)stemp);
 	file.WriteString(sLine);
+
+	file.WriteString("EXFILE=" + m_ExFile + "\n");
 
 	file.WriteString("[/CONFIG]\n");
 	return iRet;
@@ -2007,5 +2017,53 @@ int CSerialPortTestDlg::TransBuff(BOOL bHex, CString &str, BYTE* pBuff, int size
 	return len;
 }
 
-//end of file.
+BOOL CSerialPortTestDlg::LoadExternedTxt(CString sFile)
+{
+	CStdioFile f;
+	CFileException e;
+	CString sLine;
+	TRY 
+	{
+		if(f.Open(sFile, CFile::modeRead|CFile::typeText, &e))
+		{
+			while(f.ReadString(sLine))
+			{
+				if(sLine.IsEmpty()) continue;
+				if(0 > SendDlgItemMessage(IDC_MEM_1, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)sLine))
+					return FALSE;
+			}
+			f.Close();
+			return TRUE;
+		}
+	}
+	CATCH (CMemoryException, e)
+	{
+		
+	}
+	END_CATCH;
+	return FALSE;
+}
 
+void CSerialPortTestDlg::OnCbnSelchangeMem1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	if(0 == SendDlgItemMessage(IDC_MEM_1, CB_GETCURSEL))
+	{
+		CFileDialog cfd(TRUE, NULL, NULL, 0, "text文件(*.txt)|*.txt||", this);
+
+		if(cfd.DoModal() == IDOK)
+		{
+			CString str;
+			str = cfd.GetPathName();
+			if(LoadExternedTxt(str))
+				m_ExFile = str;
+		}
+		if(0<SendDlgItemMessage(IDC_MEM_1, CB_GETCOUNT))
+		{
+			SendDlgItemMessage(IDC_MEM_1, CB_SETCURSEL, 0 , 1);
+		}
+	}
+}
+
+//end of file.
