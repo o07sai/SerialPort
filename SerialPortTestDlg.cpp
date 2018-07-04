@@ -69,6 +69,12 @@ BOOL CAboutDlg::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 	CString str=_T(
+		"2018年07月04日\n"
+		"1. 删除扩展预置发送内容\n"
+		"2. 添加一个WATCH，窗口加高，添加一个历史列表\n"
+		"3. 历史列表奇偶行不同背景色\n"
+		"4. 限制历史记录最多400条，每条文本字节数最多1000个\n"
+		"\n"
 		"2018年01月22日\n"
 		"1. 扩展预置发送内容\n"
 		"\n"
@@ -334,8 +340,8 @@ BOOL CSerialPortTestDlg::OnInitDialog()
 
 	SendDlgItemMessage(IDC_RECV_BUF, EM_LIMITTEXT, (WPARAM)-1, 0);
 
-	((CComboBox*)GetDlgItem(IDC_HIST))->LimitText(200);
-//	((CComboBox*)GetDlgItem(IDC_HIST))->SetItemHeight(0, 16);
+	((CComboBox*)GetDlgItem(IDC_HIST))->LimitText(1000);
+	((CComboBox*)GetDlgItem(IDC_HIST))->SetItemHeight(-1, 18);
 //	((CComboBox*)GetDlgItem(IDC_HIST))->SetHorizontalExtent(2000);
 // 	m_multibox.SubclassDlgItem(IDC_HIST, this);
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -541,7 +547,7 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 							str.Replace("\14", "\r\n");
 						if(i >= 0)
 							SetSendBuffContent(i, atoi((LPCSTR)s1), str);
-						else if(200 > pbox->GetCount())//最多读200条
+						else if(400 > pbox->GetCount())//最多读400条
 							pbox->AddString(str);
 					}
 // 					else
@@ -1111,7 +1117,7 @@ void CSerialPortTestDlg::SendBuffContent(int index)
 			}
 		}else{//没找到
 			int cnt  = pbox->GetCount();
-			if(cnt >= 200)//最多缓存200个
+			if(cnt >= 400)//最多缓存400个
 				pbox->DeleteString(cnt - 1);
 			pbox->InsertString(0, str);//插入到第一个。
 			m_bModifiedParam = TRUE;
@@ -2094,3 +2100,4 @@ void CSerialPortTestDlg::OnClose()
 
 	CDialog::OnOK();
 }
+

@@ -12,7 +12,7 @@ IMPLEMENT_DYNAMIC(CMultiLineBox, CComboBox)
 
 CMultiLineBox::CMultiLineBox()
 {
-
+	m_pfont = NULL;
 }
 
 CMultiLineBox::~CMultiLineBox()
@@ -34,8 +34,8 @@ void CMultiLineBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	// TODO:  添加您的代码以绘制指定项
 	if(lpDrawItemStruct->CtlType==ODT_COMBOBOX)  
-	{  
-		CDC dc;  
+	{
+		CDC dc;
 		dc.Attach(lpDrawItemStruct->hDC);  
 		CRect rcClient = lpDrawItemStruct->rcItem;  
 		UINT state = lpDrawItemStruct->itemState;  
@@ -47,24 +47,44 @@ void CMultiLineBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		}  
 		else  
 		{  
-// 			br.CreateSolidBrush(RGB(255,255,128));
-			br.CreateSolidBrush(RGB(255,255,255));
+			if(lpDrawItemStruct->itemID & 0x01)
+				br.CreateSolidBrush(RGB(255,255,255));
+			else
+				br.CreateSolidBrush(RGB(196,232,253));
+
 			dc.SetTextColor(RGB(0,0,0));  
 		}  
 		dc.FillRect(&rcClient,&br);  
 		dc.SetBkMode(TRANSPARENT);  
-		//如果不是空项  
-		if(lpDrawItemStruct->itemID!=(UINT)-1)  
+		
+		if(lpDrawItemStruct->itemState & ODS_COMBOBOXEDIT)
+		{
+			if(lpDrawItemStruct->itemID!=(UINT)-1)
+			{
+				UINT id = lpDrawItemStruct->itemID;  
+				CString strText;  
+				GetLBText(id,strText);
+				dc.DrawText(strText, -1,&rcClient, DT_LEFT); 
+			}
+		}
+		else if(lpDrawItemStruct->itemID!=(UINT)-1)  
 		{  
 			UINT id = lpDrawItemStruct->itemID;  
-			CString strText;  
-			GetLBText(id,strText);  
+			CString strText,str;  
+			GetLBText(id,strText);
 
-// 			::OutputDebugStringA("id str:" + strText + "\n");
+			str.Format("drawitem rect:%d,%d,%d,%d\n",
+				rcClient.left, rcClient.top, rcClient.right, rcClient.bottom);
+			::OutputDebugStringA(str);
 
-			rcClient.DeflateRect(2,1); 
+ 			rcClient.DeflateRect(2,1);
 
-			dc.DrawText(strText, strText.GetLength(),&rcClient, DT_WORDBREAK| DT_EDITCONTROL);  
+			CRect rc=rcClient;
+			dc.DrawText(strText, -1, rc, DT_WORDBREAK| DT_EDITCONTROL | DT_CALCRECT);
+			SetItemHeight(id, rc.Height()+4);
+
+			rcClient.top += 1;
+			dc.DrawText(strText, -1,&rcClient, DT_WORDBREAK| DT_EDITCONTROL);  
 		}  
 		dc.Detach();  
 	}
@@ -78,24 +98,22 @@ void CMultiLineBox::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 	if( (lpMeasureItemStruct->CtlType==ODT_COMBOBOX)&&  
 		(lpMeasureItemStruct->itemID!=(UINT)-1))  
 	{  
-		CString strText;  
+		CString strText,str;  
 		GetLBText(lpMeasureItemStruct->itemID,strText);
 		CRect rcClient;
 		GetClientRect(rcClient);
+
+		str.Format("MeasureItem rect:%d,%d,%d,%d\n",
+			rcClient.left, rcClient.top, rcClient.right, rcClient.bottom);
+		::OutputDebugStringA(str);
+
+		rcClient.right += 20;
 		
-// 		CString str;
-// 		str.Format("rect:%d,%d\n", rcClient.Width(), rcClient.Height());
-// 		::OutputDebugStringA(str);
-		
-		CDC* pDC = GetDC();   
-		rcClient.DeflateRect(2,1);  
-		lpMeasureItemStruct->itemHeight = -16 + pDC->DrawText(strText, -1, rcClient, DT_WORDBREAK| DT_EDITCONTROL | DT_CALCRECT);   
-		
-// 		str.Format("height:%d\n", lpMeasureItemStruct->itemHeight);
-// 		::OutputDebugStringA(str);
-// 		str.Format("rect2:%d,%d\n", rcClient.Width(), rcClient.Height());
-// 		::OutputDebugStringA(str);
+		CDC* pDC = GetDC();//这个dc和上面函数里的dc不同，计算高度有误差。
+ 		rcClient.DeflateRect(2,1);  
+		lpMeasureItemStruct->itemHeight = pDC->DrawText(strText, -1, rcClient, DT_WORDBREAK| DT_EDITCONTROL | DT_CALCRECT);   
 		
 		ReleaseDC(pDC);  
-	} 
+	}
 }
+

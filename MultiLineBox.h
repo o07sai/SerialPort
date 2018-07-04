@@ -12,6 +12,7 @@ public:
 	virtual ~CMultiLineBox();
 
 protected:
+	CFont* m_pfont;
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
