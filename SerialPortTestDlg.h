@@ -9,6 +9,8 @@
 #endif // _MSC_VER > 1000
 
 #include "SerialPort.h"
+#include "afxwin.h"
+#include "MultiLineBox.h"
 
 enum ENDIAN{
 	E_BIGENDIAN=0,
@@ -51,7 +53,7 @@ private:
 	BOOL m_bModifiedParam;
 	BOOL m_bStopDis;
 	BOOL m_bSerialPortOpened;
-	Watch m_watch[7];
+	Watch m_watch[8];
 	CSerialPort m_serialPort;
 	int m_spacetime;
 	int m_lasttick;
@@ -66,8 +68,6 @@ private:
 
 	CByteArray m_recvBag;
 	BYTE m_hzi;
-
-	CString m_ExFile;
 
 private:
 	void AppendChar2Dis(BYTE c);
@@ -88,8 +88,6 @@ private:
 	int ReadParamFile(LPCSTR sFileName);
 	
 	void AppendString2Dis(LPCSTR str);
-
-	BOOL LoadExternedTxt(CString sFile);
 
 // Implementation
 protected:
@@ -125,7 +123,10 @@ public:
 protected:
 	afx_msg LRESULT OnCommTimeout(WPARAM wParam, LPARAM lParam);
 public:
-	afx_msg void OnCbnSelchangeMem1();
+	CMultiLineBox m_multibox;
+	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
+	virtual void OnCancel();
+	afx_msg void OnClose();
 };
 
 //{{AFX_INSERT_LOCATION}}

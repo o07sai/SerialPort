@@ -164,8 +164,9 @@ void CSerialPortTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSerialPortTestDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
+	DDX_Control(pDX, IDC_HIST, m_multibox);
 }
 
 BEGIN_MESSAGE_MAP(CSerialPortTestDlg, CDialog)
@@ -190,7 +191,8 @@ BEGIN_MESSAGE_MAP(CSerialPortTestDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_STN_DBLCLK(IDC_LOGO, &CSerialPortTestDlg::OnStnDbClickedLogo)
 	ON_MESSAGE(WM_COMM_TIMEOUT, &CSerialPortTestDlg::OnCommTimeout)
-	ON_CBN_SELCHANGE(IDC_MEM_1, &CSerialPortTestDlg::OnCbnSelchangeMem1)
+	ON_WM_MEASUREITEM()
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -331,6 +333,11 @@ BOOL CSerialPortTestDlg::OnInitDialog()
 	OnTimer(IDC_SYS_TIME);
 
 	SendDlgItemMessage(IDC_RECV_BUF, EM_LIMITTEXT, (WPARAM)-1, 0);
+
+	((CComboBox*)GetDlgItem(IDC_HIST))->LimitText(200);
+//	((CComboBox*)GetDlgItem(IDC_HIST))->SetItemHeight(0, 16);
+//	((CComboBox*)GetDlgItem(IDC_HIST))->SetHorizontalExtent(2000);
+// 	m_multibox.SubclassDlgItem(IDC_HIST, this);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -488,7 +495,7 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 				{
 					int i;
 					sscanf_s((LPCSTR)strArr[0], "[%d]", &i);
-					if((i <= 6) && (i >= 0))
+					if((i <= 7) && (i >= 0))
 					{
 						CString str(strArr[1]);
 						split(str, strArr, ",");
@@ -508,6 +515,7 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 		}
 		else if((0 == sLine.CompareNoCase("[SENDBUFF]")) && (n&0x04))
 		{
+			CComboBox* pbox = (CComboBox*)GetDlgItem(IDC_HIST);
 			while(file.ReadString(sLine))
 			{
 				Trim(sLine);
@@ -519,7 +527,7 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 				split(sLine, strArr, "=");
 				int i;
 				sscanf_s((LPCSTR)strArr[0], "[%d]", &i);
-				if((i < 15) && (i >= 0))
+				if(i < 15)
 				{
 					strArr.RemoveAt(0);
 					CString str = join(strArr, "=");
@@ -531,7 +539,10 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 						str = join(strArr, ",");
 						if(0 == i)
 							str.Replace("\14", "\r\n");
-						SetSendBuffContent(i, atoi((LPCSTR)s1), str);
+						if(i >= 0)
+							SetSendBuffContent(i, atoi((LPCSTR)s1), str);
+						else if(200 > pbox->GetCount())//最多读200条
+							pbox->AddString(str);
 					}
 // 					else
 // 						iRet = FALSE;
@@ -646,10 +657,6 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 						SendDlgItemMessage(IDC_NEW_LINE_END, BM_SETCHECK, BST_UNCHECKED, 0);
 					}
 				}
-				else if(0 == strArr[0].CompareNoCase("EXFILE"))
-				{
-					LoadExternedTxt(strArr[1]);
-				}
 			}
 		}
 		if(!n) break;
@@ -714,6 +721,14 @@ int CSerialPortTestDlg::SaveParamFile(LPCSTR sFileName)
 		}
 		file.WriteString(sLine);
 	}
+	CComboBox* pbox = (CComboBox*)GetDlgItem(IDC_HIST);
+	int cnt = pbox->GetCount();
+	for(i=0; i<cnt; i++)
+	{
+		pbox->GetLBText(i, stemp);
+		sLine.Format("[-1]=0,%s\n", stemp);
+		file.WriteString(sLine);
+	}
 	file.WriteString("[/SENDBUFF]\n[PARSER]\n");
 	UINT32 len = SendDlgItemMessage(IDC_ERAUTO_EDIT, WM_GETTEXTLENGTH);
 	len += 8;
@@ -776,8 +791,6 @@ int CSerialPortTestDlg::SaveParamFile(LPCSTR sFileName)
 	GetDlgItemText(IDC_SUFFIX, stemp);
 	sLine.Format("SUFFIX=%s\n", (LPCSTR)stemp);
 	file.WriteString(sLine);
-
-	file.WriteString("EXFILE=" + m_ExFile + "\n");
 
 	file.WriteString("[/CONFIG]\n");
 	return iRet;
@@ -908,7 +921,7 @@ BOOL CSerialPortTestDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 	switch(HIWORD(wParam))
 	{
 	case BN_CLICKED:
-		if(id >= IDC_WATCH_BTN1 && id <= IDC_WATCH_BTN7)
+		if(id >= IDC_WATCH_BTN1 && id <= IDC_WATCH_BTN8)
 		{
 			RECT rc;
 			GetDlgItem(id)->GetWindowRect(&rc);
@@ -1048,9 +1061,13 @@ BOOL CSerialPortTestDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 			OpenSerialPort();
 			m_bModifiedParam = TRUE;
 			break;
+		case IDC_HIST://选择了历史发送数据
+			SendBuffContent(IDC_HIST);
+			break;
 		default:
 			break;
 		}
+		break;
 	case EN_CHANGE:
 		if(((id >= IDC_MEM_1) && (id <= IDC_MEM_14)) ||
 			(id == IDC_SEND_BUF) || (id == IDC_ERAUTO_EDIT))
@@ -1074,20 +1091,51 @@ void CSerialPortTestDlg::SendBuffContent(int index)
 	CString str;
 	int id;
 	BOOL bHex;
-	if(0 == index)
+	if((index >= 0) && (index <= 14))
 	{
-		id = IDC_SEND_BUF;
-		bHex = SendDlgItemMessage(IDC_HEX_SEND, BM_GETCHECK, 0, 0);
+		if(index){
+			id = IDC_MEM_1 + index - 1;
+			bHex = SendDlgItemMessage(IDC_GHEX_SEND, BM_GETCHECK, 0, 0);
+		}else{
+			id = IDC_SEND_BUF;
+			bHex = SendDlgItemMessage(IDC_HEX_SEND, BM_GETCHECK, 0, 0);
+		}
+		GetDlgItem(id)->GetWindowText(str);
+		CComboBox* pbox = (CComboBox*)GetDlgItem(IDC_HIST);
+		int sel = pbox->FindStringExact(-1, str);
+		if(sel >= 0){//找到
+			if(sel){//不在第一个。
+				pbox->DeleteString(sel);
+				pbox->InsertString(0, str);//插入到第一个。
+				m_bModifiedParam = TRUE;
+			}
+		}else{//没找到
+			int cnt  = pbox->GetCount();
+			if(cnt >= 200)//最多缓存200个
+				pbox->DeleteString(cnt - 1);
+			pbox->InsertString(0, str);//插入到第一个。
+			m_bModifiedParam = TRUE;
+		}
 	}
-	else if((index > 0) && (index <= 14))
+	else if(index == IDC_HIST)
 	{
-		id = IDC_MEM_1 + index - 1;
 		bHex = SendDlgItemMessage(IDC_GHEX_SEND, BM_GETCHECK, 0, 0);
+		CComboBox* pbox = (CComboBox*)GetDlgItem(IDC_HIST);
+		int sel = pbox->GetCurSel();
+		if(sel >= 0)
+			pbox->GetLBText(sel, str);
+		else return;
+		if(sel > 0)
+		{
+			pbox->DeleteString(sel);
+			pbox->InsertString(0, str);//插入到第一个。
+			pbox->SetCurSel(0);
+			m_bModifiedParam = TRUE;
+		}
 	}
 	else
 		return;
 	BYTE pBuff[4096];// = NULL;// = (BYTE*)malloc(2048);
-	GetDlgItem(id)->GetWindowText(str);
 
 	int len = TransBuff(bHex, str, pBuff, 2048);
 	if(len <= 0) return;
@@ -2017,53 +2065,32 @@ int CSerialPortTestDlg::TransBuff(BOOL bHex, CString &str, BYTE* pBuff, int size
 	return len;
 }
 
-BOOL CSerialPortTestDlg::LoadExternedTxt(CString sFile)
-{
-	CStdioFile f;
-	CFileException e;
-	CString sLine;
-	TRY 
-	{
-		if(f.Open(sFile, CFile::modeRead|CFile::typeText, &e))
-		{
-			while(f.ReadString(sLine))
-			{
-				if(sLine.IsEmpty()) continue;
-				if(0 > SendDlgItemMessage(IDC_MEM_1, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)sLine))
-					return FALSE;
-			}
-			f.Close();
-			return TRUE;
-		}
-	}
-	CATCH (CMemoryException, e)
-	{
-		
-	}
-	END_CATCH;
-	return FALSE;
-}
-
-void CSerialPortTestDlg::OnCbnSelchangeMem1()
-{
-	// TODO: 在此添加控件通知处理程序代码
-
-	if(0 == SendDlgItemMessage(IDC_MEM_1, CB_GETCURSEL))
-	{
-		CFileDialog cfd(TRUE, NULL, NULL, 0, "text文件(*.txt)|*.txt||", this);
-
-		if(cfd.DoModal() == IDOK)
-		{
-			CString str;
-			str = cfd.GetPathName();
-			if(LoadExternedTxt(str))
-				m_ExFile = str;
-		}
-		if(0<SendDlgItemMessage(IDC_MEM_1, CB_GETCOUNT))
-		{
-			SendDlgItemMessage(IDC_MEM_1, CB_SETCURSEL, 0 , 1);
-		}
-	}
-}
-
 //end of file.
+
+
+
+void CSerialPortTestDlg::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+// 	if(nIDCtl == IDC_HIST)
+// 	{
+// 		m_multibox.MeasureItem(lpMeasureItemStruct);
+// 		return;
+// 	}
+	CDialog::OnMeasureItem(nIDCtl, lpMeasureItemStruct);
+}
+
+void CSerialPortTestDlg::OnCancel()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+//	CDialog::OnCancel();
+}
+
+
+void CSerialPortTestDlg::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	CDialog::OnOK();
+}

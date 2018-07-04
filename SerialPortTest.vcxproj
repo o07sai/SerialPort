@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="crc.cpp" />
+    <ClCompile Include="MultiLineBox.cpp" />
     <ClCompile Include="SerialPort.cpp" />
     <ClCompile Include="SerialPortTest.cpp" />
     <ClCompile Include="SerialPortTestDlg.cpp" />
@@ -154,6 +155,7 @@
     <ResourceCompile Include="SerialPortTest.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MultiLineBox.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SerialPort.h" />
     <ClInclude Include="SerialPortTest.h" />

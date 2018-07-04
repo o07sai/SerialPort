@@ -317,7 +317,7 @@ UINT CSerialPort::CommThread(LPVOID pParam)
 			// event (Event2) will not work if the thread is blocked by GetOverlappedResults().
 			//
 			// The solution to this is to check the buffer with a call to ClearCommError().
-			// This call will reset the event handle, and if there are no bytes to read
+			// This call3 will reset the event handle, and if there are no bytes to read
 			// we can loop back through WaitCommEvent() again, then proceed.
 			// If there are really bytes to read, do nothing and proceed.
 
@@ -332,7 +332,8 @@ UINT CSerialPort::CommThread(LPVOID pParam)
 //		SetEvent(port->m_ov.hEvent);
 		// Main wait function.  This function will normally block the thread
 		// until one of nine events occur that require action.
-		Event = ::WaitForMultipleObjects(3, port->m_hEventArray, FALSE, 1);
+		Sleep(1);
+		Event = ::WaitForMultipleObjects(3, port->m_hEventArray, FALSE, 4);
 
 		if(port->m_dwTimerOut && port->m_bHasRecieved)
 		{
@@ -362,8 +363,10 @@ UINT CSerialPort::CommThread(LPVOID pParam)
 			{
 				GetCommMask(port->m_hComm, &CommEvent);
 				if (CommEvent & EV_RXCHAR)
+				{
 					// Receive character event from port.
 					ReceiveChar(port);
+				}
 				if (CommEvent & EV_CTS)
 					::SendMessage(port->m_pOwner->m_hWnd, WM_COMM_CTS_DETECTED, (WPARAM) 0, (LPARAM) port->m_nPortNr);
 				if (CommEvent & EV_BREAK)
@@ -665,6 +668,7 @@ void CSerialPort::ReceiveChar(CSerialPort* port)
 			::SendMessage((port->m_pOwner)->m_hWnd, WM_COMM_RXCHAR,
 				(WPARAM) RXBuff, (LPARAM)MAKELONG(BytesRead, port->m_nPortNr));
 		}
+		else break;
 	} // end forever loop
 /*
 	if(i)
