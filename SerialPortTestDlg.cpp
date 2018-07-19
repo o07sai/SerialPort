@@ -69,6 +69,11 @@ BOOL CAboutDlg::OnInitDialog()
 	
 	// TODO: Add extra initialization here
 	CString str=_T(
+		"2018年07月19日\n"
+		"1. 程序默认字符显示模式显示汉字。\n"
+		"2. 如果配置文件中，CONFIG字段有DISHANZI=0,则不显示汉字，所有字节大于127的，都换成0x07。\n"
+		"3. V1.5.0\n"
+		"\n"
 		"2018年07月04日\n"
 		"1. 删除扩展预置发送内容\n"
 		"2. 添加一个WATCH，窗口加高，添加一个历史列表\n"
@@ -164,6 +169,8 @@ CSerialPortTestDlg::CSerialPortTestDlg(CWnd* pParent /*=NULL*/)
 	m_bSumAdd = FALSE;
 	m_bHasTimeOut = TRUE;
 	m_spacetime = 20;
+
+	m_bDisHZ = TRUE;
 }
 
 void CSerialPortTestDlg::DoDataExchange(CDataExchange* pDX)
@@ -663,6 +670,10 @@ int CSerialPortTestDlg::ReadParamFile(LPCSTR sFileName)
 						SendDlgItemMessage(IDC_NEW_LINE_END, BM_SETCHECK, BST_UNCHECKED, 0);
 					}
 				}
+				else if( 0 == strArr[0].CompareNoCase("DISHANZI"))
+				{
+					m_bDisHZ = !!check;
+				}
 			}
 		}
 		if(!n) break;
@@ -796,6 +807,9 @@ int CSerialPortTestDlg::SaveParamFile(LPCSTR sFileName)
 
 	GetDlgItemText(IDC_SUFFIX, stemp);
 	sLine.Format("SUFFIX=%s\n", (LPCSTR)stemp);
+	file.WriteString(sLine);
+
+	sLine.Format("DISHANZI=%d\n", m_bDisHZ);
 	file.WriteString(sLine);
 
 	file.WriteString("[/CONFIG]\n");
@@ -1386,6 +1400,7 @@ void CSerialPortTestDlg::DefaultParam()
 		m_watch[i].bHex = TRUE;
 	}
 	m_bModifiedParam = TRUE;
+	m_bDisHZ = TRUE;
 }
 
 LRESULT CSerialPortTestDlg::OnCommTXEmptyDtd(WPARAM wParam, LPARAM lParam)
@@ -1562,7 +1577,26 @@ void CSerialPortTestDlg::AppendString2Dis(LPCSTR str)
 	if(m_bStopDis) return;
 	int len = SendDlgItemMessage(IDC_RECV_BUF, WM_GETTEXTLENGTH, 0, 0);
 	SendDlgItemMessage(IDC_RECV_BUF, EM_SETSEL, len, len);
-	SendDlgItemMessage(IDC_RECV_BUF, EM_REPLACESEL, 0, (LPARAM)str);
+
+	if(m_bDisHZ)//显示汉字(GBK编码)
+		SendDlgItemMessage(IDC_RECV_BUF, EM_REPLACESEL, 0, (LPARAM)str);
+	else
+	{
+		int n = strlen(str);
+		char *buff = (char*)malloc(n+8);
+		if(buff)
+		{
+			int i;
+			for(i=0; i<n; i++)
+			{
+				if(str[i] < 0) buff[i] = 0x07;
+				else buff[i] = str[i];
+			}
+			buff[i] = 0;
+			SendDlgItemMessage(IDC_RECV_BUF, EM_REPLACESEL, 0, (LPARAM)buff);
+			free(buff);
+		}
+	}
 }
 
 void CSerialPortTestDlg::OnTimer(UINT nIDEvent)

@@ -77,7 +77,7 @@ CAPTION "关于 魔杖串口工具"
 FONT 10, "宋体", 400, 0, 0x86
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "魔杖串口工具 1.4.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "魔杖串口工具 1.5.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "版权所有 (C) 2018-07 o07sai",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "确定",IDOK,307,12,50,19,WS_GROUP
     LTEXT           "o07sai@163.com",IDC_STATIC,7,219,119,8
@@ -259,7 +259,7 @@ BEGIN
             VALUE "LegalCopyright", "版权所有 (C) 2017 ---o07sai"
             VALUE "OriginalFilename", "魔杖串口工具.EXE"
             VALUE "ProductName", "魔杖串口工具 应用程序"
-            VALUE "ProductVersion", "V1.4.0"
+            VALUE "ProductVersion", "V1.5.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -287,7 +287,6 @@ BEGIN
 
     IDD_SERIALPORT_DIALOG, DIALOG
     BEGIN
-        MOCKUP, 0, 100, 0, 0, ".\res\m_1297216136172.bmp"
         LEFTMARGIN, 1
         RIGHTMARGIN, 676
         BOTTOMMARGIN, 398

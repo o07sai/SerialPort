@@ -49,6 +49,7 @@ public:
 	//}}AFX_VIRTUAL
 
 private:
+	BOOL m_bDisHZ;
 	BOOL m_bSumAdd;
 	BOOL m_bModifiedParam;
 	BOOL m_bStopDis;
